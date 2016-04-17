@@ -19,7 +19,8 @@
         <activity android:name=".FinanceScreen" />
         <activity android:name=".BudgetScreen" />
         <activity android:name=".TravelScreen" />
-        <activity android:name=".SummaryPage"></activity>
+        <activity android:name=".SummaryPage" />
+        <activity android:name=".NewTripScreen"></activity>
     </application>
 
 </manifest>
