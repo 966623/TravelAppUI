@@ -18,7 +18,8 @@
         <activity android:name=".HomeScreen" />
         <activity android:name=".FinanceScreen" />
         <activity android:name=".BudgetScreen" />
-        <activity android:name=".TravelScreen"></activity>
+        <activity android:name=".TravelScreen" />
+        <activity android:name=".SummaryPage"></activity>
     </application>
 
 </manifest>
