@@ -6,4 +6,14 @@
     <color name="background_material_light">#bababa</color>
     <color name="primary_text_default_material_light">#de7c7c7c</color>
     <color name="NormalColor">#000000</color>
+    <color name="background_dark">#bdbdbd</color>
+    <color name="legacy_primary_dark">#7f7f7f</color>
+    <color name="primary_material_dark_1">#800000</color>
+    <color name="background_material_dark">#c8c8c8</color>
+    <color name="primary_dark_material_dark">#640000</color>
+    <color name="accent_material_dark">#e3c003</color>
+    <color name="black">#000000</color>
+    <color name="primary_text_default_material_dark">#646464</color>
+    <color name="AlmostBlack">#141414</color>
+    <color name="colorBackground">#c8c8c8</color>
 </resources>

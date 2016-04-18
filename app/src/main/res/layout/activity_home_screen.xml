@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
@@ -10,63 +11,53 @@
     tools:context="com.example.seanlin.unitravel.HomeScreen"
     android:background="#bbbbbb">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="HOME"
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:textColor="#ffffff" />
+
+
+
+    </android.support.v7.widget.Toolbar>
+
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:text="New Trip"
         android:id="@+id/new_trip_button"
-        android:background="#ffffff"
-        android:shadowColor="#00ffffff"
-        android:singleLine="false"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="53dp"
         android:textSize="18dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:background="#ffffff"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onButtonClick" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Planned Trips"
-        android:id="@+id/planned_trips_text"
-        android:layout_marginTop="61dp"
-        android:textSize="24dp"
+        android:id="@+id/textView2"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textSize="24dp"
         android:layout_below="@+id/new_trip_button"
-        android:layout_alignLeft="@+id/new_trip_button"
-        android:layout_alignStart="@+id/new_trip_button" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Trip Name"
-        android:id="@+id/button"
-        android:background="#ffffff"
-        android:textSize="18dp"
-        android:layout_below="@+id/planned_trips_text"
-        android:layout_alignLeft="@+id/planned_trips_text"
-        android:layout_alignStart="@+id/planned_trips_text"
-        android:layout_marginTop="49dp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#5b8efd">
+        android:layout_marginTop="24dp" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="56dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="HOME"
-            android:id="@+id/textView"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
-            android:textSize="36dp"
-            android:textStyle="bold" />
-    </FrameLayout>
 
 </RelativeLayout>
