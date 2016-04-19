@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.seanlin.unitravel.TravelScreen">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -37,13 +34,13 @@
             android:contentDescription="HomeButton" />
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="TRAVEL"
-        android:id="@+id/textView"
-        android:layout_gravity="center"
-        android:textColor="#ffffff" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="TRAVEL"
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:textColor="#ffffff" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -63,7 +60,7 @@
             android:id="@+id/button2"
             android:layout_gravity="left|top"
             android:textSize="18dp"
-            android:background="#e6d100" />
+            android:background="#d5d2d2" />
 
         <Button
             android:layout_width="125dp"
@@ -82,7 +79,7 @@
             android:id="@+id/button4"
             android:layout_gravity="right|center_vertical"
             android:textColor="#fbf7f7"
-            android:background="#d5d2d2"
+            android:background="#e6d100"
             android:textSize="20dp" />
 
     </FrameLayout>
@@ -114,95 +111,46 @@
             android:textColor="#050505"
             android:textStyle="bold"
             android:textSize="20dp" />
-    </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="66dp"
-        android:background="#fefcfc"
-        android:id="@+id/frameLayout7"
-        android:layout_below="@+id/frameLayout6">
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="Depart"
-            android:id="@+id/textView11"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="#080808" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="80dp"
-        android:layout_height="66dp"
-        android:background="#fefcfc"
-        android:id="@+id/frameLayout8"
-        android:layout_alignTop="@+id/frameLayout7"
-        android:layout_toRightOf="@+id/frameLayout7" >
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calendar"
-            android:id="@+id/button5"
-            android:layout_gravity="left|center_vertical"
-            android:textSize="10dp"
-            android:background="#d5d2d2" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="110dp"
-        android:layout_height="66dp"
-        android:background="#fefcfc"
-        android:id="@+id/frameLayout9"
-        android:layout_alignTop="@+id/frameLayout8"
-        android:layout_toRightOf="@+id/frameLayout8"
-        android:layout_toEndOf="@+id/frameLayout8">
-
-        <TextView
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="Arrive"
-            android:id="@+id/textView12"
-            android:layout_gravity="center|right"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="#080808" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="100dp"
-        android:layout_height="66dp"
-        android:background="#fefcfc"
-        android:id="@+id/frameLayout10"
-        android:layout_alignTop="@+id/frameLayout9"
-        android:layout_alignRight="@+id/frameLayout6"
-        android:layout_alignEnd="@+id/frameLayout6" >
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="calendar"
-            android:id="@+id/button6"
-            android:layout_gravity="center"
-            android:textSize="10dp"
-            android:background="#d5d2d2" />
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_alignLeft="@+id/frameLayout7"
-        android:layout_alignStart="@+id/frameLayout7"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="#ffffff"
-        android:layout_below="@+id/frameLayout7"></FrameLayout>
+        android:layout_below="@+id/frameLayout6">
 
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Bus"
+            android:id="@+id/button7"
+            android:layout_gravity="left|top"
+            android:textSize="18dp"
+            android:background="#d5d2d2" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Shuttle"
+            android:id="@+id/button8"
+            android:layout_gravity="center_horizontal|top"
+            android:textSize="16dp"
+            android:background="#d5d2d2"
+            android:textColor="#020202" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Tax"
+            android:id="@+id/button9"
+            android:layout_gravity="right|top"
+            android:textColor="#040404"
+            android:background="#d5d2d2"
+            android:textSize="20dp" />
+    </FrameLayout>
 
 </RelativeLayout>
