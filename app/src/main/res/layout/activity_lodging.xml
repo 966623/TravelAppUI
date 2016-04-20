@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <ImageButton
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/imageButton"
+            android:src="@android:drawable/ic_menu_revert"
+            android:layout_alignParentEnd="false"
+            android:layout_gravity="left"
+            android:background="?attr/colorPrimary"
+            android:contentDescription="HomeButton" />
+
+        <ImageButton
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/imageButtonCancel"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_alignParentEnd="false"
+            android:layout_gravity="right"
+            android:background="?attr/colorPrimary"
+            android:contentDescription="HomeButton" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LODGING"
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:textColor="#ffffff" />
+
+    </android.support.v7.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignLeft="@+id/my_toolbar"
+        android:layout_alignStart="@+id/my_toolbar"
+        android:id="@+id/frameLayout5"
+        android:background="#ffffff">
+
+        <Button
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:text="HOTEL"
+            android:id="@+id/button2"
+            android:layout_gravity="left|top"
+            android:textSize="18dp"
+            android:background="#d5d2d2" />
+
+        <Button
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:text="Rentals"
+            android:id="@+id/button3"
+            android:layout_gravity="right|center_vertical"
+            android:textSize="20dp"
+            android:background="#e6d100"
+            android:textColor="#fbf7f7" />
+
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frameLayout5"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Type:"
+            android:id="@+id/textView13"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="39dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <AutoCompleteTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New AutoCompleteTextView"
+            android:id="@+id/autoCompleteTextView"
+            android:layout_marginTop="33dp"
+            android:layout_toRightOf="@+id/textView13"
+            android:layout_toEndOf="@+id/textView13"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Max Price Per Night: $ "
+            android:id="@+id/textView14"
+            android:layout_below="@+id/autoCompleteTextView"
+            android:layout_alignLeft="@+id/textView13"
+            android:layout_alignStart="@+id/textView13"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Dates:"
+            android:id="@+id/textView15"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/textView14"
+            android:layout_alignLeft="@+id/textView14"
+            android:layout_alignStart="@+id/textView14" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker"
+            android:layout_alignTop="@+id/textView14"
+            android:layout_toRightOf="@+id/textView14"
+            android:layout_toEndOf="@+id/textView14"
+            android:layout_above="@+id/textView15" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editText7"
+            android:layout_alignBottom="@+id/textView15"
+            android:layout_alignLeft="@+id/autoCompleteTextView"
+            android:layout_alignStart="@+id/autoCompleteTextView"
+            android:layout_marginRight="40dp"
+            android:layout_toStartOf="@+id/numberPicker" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/editText9"
+            android:layout_alignTop="@+id/editText7"
+            android:layout_toRightOf="@+id/editText7"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="To"
+            android:id="@+id/textView17"
+            android:layout_alignBottom="@+id/editText7"
+            android:layout_alignRight="@+id/textView14"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search "
+            android:id="@+id/button10"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textView15"
+            android:layout_alignStart="@+id/textView15"
+            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp"
+            android:clickable="true"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Advanced Search"
+            android:id="@+id/button11"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/autoCompleteTextView"
+            android:layout_alignEnd="@+id/autoCompleteTextView"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+
+</R
