@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Alex on 4/20/2016.
  */
 public class Trip {
-        private String tripName, notes;
+    private String tripName, notes;
     private Date start, end;
     public ArrayList<Expense> travelExpenses, lodgingExpenses, foodExpenses;
 
