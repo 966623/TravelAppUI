@@ -12,6 +12,9 @@ public class Trip {
     public ArrayList<Expense> travelExpenses, lodgingExpenses, foodExpenses;
 
 
+    public String getTripName(){
+        return tripName;
+    }
     //constructor with everything empty
     public Trip() {
         this.tripName = "";

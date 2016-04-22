@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.text.ParseException;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,6 +23,8 @@ import android.widget.DatePicker;
 import android.app.DatePickerDialog;
 import android.view.View.OnClickListener;
 import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Locale;
 import android.widget.Button;
 
@@ -32,6 +35,7 @@ public class NewTripScreen extends AppCompatActivity {
     AutoCompleteTextView schoolNameText;
     Button dateStartText;
     Button dateEndText;
+    EditText notesText;
     String[] schools={"University of Minnesota","University of Wisconsin","Yale","Stanford","Princeton","University of Michigan"};
 
     private GoogleApiClient client;
@@ -79,7 +83,7 @@ public class NewTripScreen extends AppCompatActivity {
             }
         });
 
-
+        notesText = ((EditText) findViewById(R.id.NewNoteText));
         //Set start date
         dateStartText = ((Button) findViewById(R.id.NewDateStart));
         dateEndText = ((Button) findViewById(R.id.NewDateEnd));
@@ -118,6 +122,34 @@ public class NewTripScreen extends AppCompatActivity {
         if(dateEndText.getText().toString().length() <= 0)
             return;
 
+
+
+        Globals g = (Globals)getApplication();
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date startDate = new Date();
+        Date endDate = new Date();
+        try {
+            startDate = formatter.parse(dateStartText.getText().toString());
+        } catch (ParseException e) {              // Insert this block.
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            endDate = formatter.parse(dateEndText.getText().toString());
+        } catch (ParseException e) {              // Insert this block.
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Trip newTrip = new Trip(tripNameText.getText().toString(),
+                notesText.getText().toString(),
+                startDate,endDate
+                );
+
+
+        g.getTripList().tripArrayList.add(newTrip);
+        g.setCurrentTrip(newTrip);
         Intent i = new Intent(getApplicationContext(), SummaryPage.class);
         startActivity(i);
     }

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class SummaryPage extends AppCompatActivity {
     private ArrayList<String> arrayList;
 
     private Trip trip;
-
+    private TextView tripNameText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,11 @@ public class SummaryPage extends AppCompatActivity {
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
         expenseList.setAdapter(adapter);
+
+        Globals g = (Globals)getApplication();
+        tripNameText = ((TextView) findViewById(R.id.tripNameText));
+
+        tripNameText.setText(g.getCurrentTrip().getTripName());
     }
 
     //buttons acting as a group of tabs. Not sure of the best way to do this, but is should work.

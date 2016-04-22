@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DatePickerWindow extends DialogFragment implements DatePickerDialog.OnDateSetListener{
     private Fragment frag;
@@ -41,7 +42,10 @@ public class DatePickerWindow extends DialogFragment implements DatePickerDialog
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         Button button = (Button) getActivity().findViewById(bundle.getInt("id"));
-
-        button.setText(Integer.toString(month+1) + "/" + Integer.toString(day) + "/" + Integer.toString(year));
+        Calendar newDate = Calendar.getInstance();
+        newDate.set(year + 1900, month, day);
+        String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy")
+                .format(newDate.getTime());
+        button.setText(stringDate);
     }
 }
