@@ -17,4 +17,7 @@
     <color name="AlmostBlack">#141414</color>
     <color name="colorBackground">#c8c8c8</color>
     <color name="hint_color">#969696</color>
+    <color name="maroon">#800000</color>
+    <color name="gold">#FFD700</color>
+    <color name="eggshell">#F0EAD6</color>
 </resources>

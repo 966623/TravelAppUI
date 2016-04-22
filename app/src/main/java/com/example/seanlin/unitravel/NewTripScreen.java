@@ -14,15 +14,24 @@ import android.widget.AutoCompleteTextView;
 import android.text.TextWatcher;
 import android.text.Editable;
 import android.widget.ArrayAdapter;
+import android.app.FragmentTransaction;
+import android.app.DialogFragment;
+import android.widget.CalendarView;
+import java.util.Calendar;
+import android.widget.DatePicker;
+import android.app.DatePickerDialog;
+import android.view.View.OnClickListener;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import android.widget.Button;
 
 public class NewTripScreen extends AppCompatActivity {
 
     EditText budgetText;
     EditText tripNameText;
     AutoCompleteTextView schoolNameText;
-    EditText dateStartText;
-    EditText DateEndText;
-
+    Button dateStartText;
+    Button dateEndText;
     String[] schools={"University of Minnesota","University of Wisconsin","Yale","Stanford","Princeton","University of Michigan"};
 
     private GoogleApiClient client;
@@ -31,7 +40,7 @@ public class NewTripScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip_screen);
 
-
+        //School autocorrect
         schoolNameText = ((AutoCompleteTextView) findViewById((R.id.SchoolNameAuto)));
         ArrayAdapter adapt = new ArrayAdapter(this,android.R.layout.simple_list_item_1,schools);
         schoolNameText.setAdapter(adapt);
@@ -70,12 +79,21 @@ public class NewTripScreen extends AppCompatActivity {
             }
         });
 
+
+        //Set start date
+        dateStartText = ((Button) findViewById(R.id.NewDateStart));
+        dateEndText = ((Button) findViewById(R.id.NewDateEnd));
+        //Trip name text
         tripNameText = ((EditText) findViewById(R.id.NewTripName));
+
+
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
 
     public void onNewTripButtonClick(View view) {
         //do something when button is clicked.
@@ -93,8 +111,39 @@ public class NewTripScreen extends AppCompatActivity {
 
         if(tripNameText.getText().toString().length() <= 0)
             return;
+
+        if(dateStartText.getText().toString().length() <= 0)
+            return;
+
+        if(dateEndText.getText().toString().length() <= 0)
+            return;
+
         Intent i = new Intent(getApplicationContext(), SummaryPage.class);
         startActivity(i);
+    }
+
+    //Sets date using popup date selector
+    public void setNewTripStartDate(View view)
+    {
+        //Create a Bundle to pass in the ID of the button we want to modify the text of
+        Bundle idBundle = new Bundle();
+        idBundle.putInt("id", dateStartText.getId());
+
+        //Create a new DialogFragment and pass in the bundle
+        DialogFragment newFragment = new DatePickerWindow(idBundle);
+
+        //Show the date picker
+        newFragment.show(getFragmentManager(), "Date");
+
+    }
+
+    public void setNewTripEndDate(View view)
+    {
+        Bundle idBundle = new Bundle();
+        idBundle.putInt("id", dateEndText.getId());
+        DialogFragment newFragment = new DatePickerWindow(idBundle);
+        newFragment.show(getFragmentManager(), "Date");
+
     }
 
 
@@ -137,4 +186,6 @@ public class NewTripScreen extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+
 }

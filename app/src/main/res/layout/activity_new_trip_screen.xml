@@ -58,12 +58,47 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:layout_below="@+id/mtoolbar"
+        android:id="@+id/TripNameLayout"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Trip Name:"
+            android:id="@+id/textView6"
+            android:textSize="24dp"
+            android:layout_below="@+id/mtoolbar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical|left"
+            android:layout_weight=".4"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/NewTripName"
+            android:layout_gravity="center_vertical|right"
+            android:layout_weight=".6"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
         android:layout_gravity="center"
         android:id="@+id/NewSchoolLayout"
         android:background="#ffffff"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/mtoolbar"
+        android:layout_below="@+id/TripNameLayout"
         android:weightSum="1"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -88,8 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/SchoolNameAuto"
-            android:layout_weight=".6"
-            android:hint="University..." />
+            android:layout_weight=".6" />
 
     </LinearLayout>
 
@@ -106,38 +140,71 @@
         android:nestedScrollingEnabled="false"
         android:onClick="onNewTripButtonClick" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="56dp"
-        android:background="#ffffff"
+        android:layout_below="@+id/NewSchoolLayout"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button"
-        android:id="@+id/frameLayout">>
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="55dp"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/NewNoteText"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="#ffffff"
+        android:id="@+id/DatesLayout">
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Notes"
-            android:id="@+id/Notes"
+            android:text="Dates:"
+            android:id="@+id/textView4"
             android:textSize="24dp"
             android:layout_below="@+id/mtoolbar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginRight="0dp"
-            android:layout_marginLeft="0dp"
-            android:textAlignment="center" />
-    </FrameLayout>
+            android:layout_gravity="center_vertical|left"
+            android:layout_weight=".24"
+            android:gravity="center_vertical" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/NewDateStart"
+            android:layout_weight=".33"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:hint="MM/DD/YY"
+            android:onClick="setNewTripStartDate"
+            style="@android:style/Widget.DeviceDefault.Spinner"
+            android:gravity="center|center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="-"
+            android:id="@+id/textView8"
+            android:textSize="24dp"
+            android:layout_below="@+id/mtoolbar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_weight=".05"
+            android:gravity="center_vertical" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/NewDateEnd"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight=".33"
+            android:hint="MM/DD/YY"
+            style="@android:style/Widget.DeviceDefault.Spinner"
+            android:onClick="setNewTripEndDate"
+            android:gravity="center|center_vertical" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -188,93 +255,37 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_below="@+id/NewSchoolLayout"
-        android:layout_centerHorizontal="true"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:background="#ffffff"
-        android:id="@+id/DatesLayout">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Dates:"
-            android:id="@+id/textView4"
-            android:textSize="24dp"
-            android:layout_below="@+id/mtoolbar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center_vertical|left"
-            android:layout_weight=".3"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/NewDateEnd"
-            android:layout_gravity="center_vertical|right"
-            android:layout_weight=".3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="-"
-            android:id="@+id/textView8"
-            android:textSize="24dp"
-            android:layout_below="@+id/mtoolbar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center_vertical"
-            android:textAlignment="center"
-            android:layout_weight=".1"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/editText"
-            android:layout_gravity="center_vertical|right"
-            android:layout_weight=".3" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="56dp"
         android:layout_centerHorizontal="true"
-        android:gravity="center_vertical"
-        android:background="#ffffff"
-        android:layout_below="@+id/NewBudget"
-        android:id="@+id/TripNameLayout"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:layout_above="@+id/button"
+        android:id="@+id/frameLayout">>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="55dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/NewNoteText"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Trip Name:"
-            android:id="@+id/textView6"
+            android:text="Notes"
+            android:id="@+id/Notes"
             android:textSize="24dp"
             android:layout_below="@+id/mtoolbar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center_vertical|left"
-            android:layout_weight=".4"
-            android:gravity="center_vertical" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/NewTripName"
-            android:layout_gravity="center_vertical|right"
-            android:layout_weight=".6" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center" />
+    </FrameLayout>
 
 </RelativeLayout>
