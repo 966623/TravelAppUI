@@ -8,7 +8,10 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.example.seanlin.unitravel.NewTripScreen">
+    tools:context="com.example.seanlin.unitravel.NewTripScreen"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/mtoolbar"
@@ -29,9 +32,9 @@
             android:id="@+id/imageButton"
             android:src="@android:drawable/ic_menu_revert"
             android:layout_alignParentEnd="false"
-            android:layout_gravity="left"
             android:background="?attr/colorPrimary"
-            android:contentDescription="HomeButton" />
+            android:contentDescription="HomeButton"
+            android:layout_gravity="left" />
 
         <ImageButton
             android:layout_width="?attr/actionBarSize"
@@ -86,7 +89,9 @@
             android:id="@+id/NewTripName"
             android:layout_gravity="center_vertical|right"
             android:layout_weight=".6"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:maxLength="20" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -117,13 +122,14 @@
             android:layout_marginRight="0dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_vertical"
-            android:layout_weight=".4" />
+            android:layout_weight=".3" />
 
         <AutoCompleteTextView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/SchoolNameAuto"
-            android:layout_weight=".6" />
+            android:layout_weight=".7"
+            android:singleLine="true" />
 
     </LinearLayout>
 
@@ -135,7 +141,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#e6d100"
+        android:background="@drawable/button_yellow"
         android:textSize="18dp"
         android:nestedScrollingEnabled="false"
         android:onClick="onNewTripButtonClick" />
@@ -256,21 +262,20 @@
     </LinearLayout>
 
     <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/NewBudget"
+        android:id="@+id/MidLine"
+        android:background="@color/maroon"></FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="175dp"
         android:background="#ffffff"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button"
-        android:id="@+id/frameLayout">>
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="55dp"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/NewNoteText"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+        android:id="@+id/NotesLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/MidLine">>
 
         <TextView
             android:layout_width="fill_parent"
@@ -285,7 +290,38 @@
             android:layout_gravity="center_horizontal|top"
             android:layout_marginRight="0dp"
             android:layout_marginLeft="0dp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="110dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/NewNoteText"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:maxLines="5"
+            android:gravity="top"
+            android:background="@drawable/text_box_border"
+            android:padding="5dp"
+            android:paddingBottom="10dp"
+            android:password="false"
+            android:phoneNumber="false"
+            android:layout_marginBottom="20dp" />
+
     </FrameLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/NewTripErrorText"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="@color/error"
+        android:textAlignment="center" />
 
 </RelativeLayout>

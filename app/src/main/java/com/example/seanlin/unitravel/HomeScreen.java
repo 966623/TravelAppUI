@@ -1,7 +1,9 @@
 package com.example.seanlin.unitravel;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +14,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import android.widget.ArrayAdapter;
 
@@ -26,13 +33,25 @@ public class HomeScreen extends AppCompatActivity {
         g = (Globals)getApplication();
         tripList = (ListView) findViewById(R.id.PlannedTripsList);
 
-
     }
     @Override
     protected void onResume(){
         super.onResume();
         Log.d("ONSTART", "Starting home");
 
+        //Load save file
+        try {
+            FileInputStream fis = this.openFileInput("save_file");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            TripList tl = (TripList) is.readObject();
+            g.setTripList(tl);
+            is.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Populate list of trips
         if(g.getTripList().tripArrayList == null)
             return;
 
@@ -49,6 +68,7 @@ public class HomeScreen extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, list);
         tripList.setAdapter(adapter);
 
+        //Add listener to each trip that goes to summary.
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -63,11 +83,34 @@ public class HomeScreen extends AppCompatActivity {
         });
     }
 
+    //Open new trip screen
     public void onButtonClick(View view){
         //do something when button is clicked.
 
         Intent i = new Intent(getApplicationContext(), NewTripScreen.class);
         startActivity(i);
+    }
+
+    //Prevent home screen from going back to anywhere
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //Delete save file, just for testing
+    public void clearData(View view){
+        File dir = getFilesDir();
+        File file = new File(dir, "save_file");
+        file.delete();
+        Intent i = new Intent(getApplicationContext(), HomeScreen.class);
+        startActivity(i);
+
     }
 
 

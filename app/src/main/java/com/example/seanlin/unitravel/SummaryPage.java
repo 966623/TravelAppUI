@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.view.KeyEvent;
 
 import java.util.ArrayList;
 
@@ -164,5 +165,19 @@ public class SummaryPage extends AppCompatActivity {
     public void assignTrip(Trip trip)
     {
         this.trip = trip;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    Intent i = new Intent(getApplicationContext(), HomeScreen.class);
+                    startActivity(i);
+                    return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -7,6 +7,6 @@ import java.util.Enumeration;
 /**
  * Created by Sean Lin on 4/17/2016.
  */
-public class TripList {
+public class TripList implements java.io.Serializable{
     public ArrayList<Trip> tripArrayList = new ArrayList<>();
 }
