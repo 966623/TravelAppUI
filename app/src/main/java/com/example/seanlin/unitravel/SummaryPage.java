@@ -168,16 +168,8 @@ public class SummaryPage extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    Intent i = new Intent(getApplicationContext(), HomeScreen.class);
-                    startActivity(i);
-                    return true;
-            }
-
-        }
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed(){
+        Intent i = new Intent(getApplicationContext(), HomeScreen.class);
+        startActivity(i);
     }
 }

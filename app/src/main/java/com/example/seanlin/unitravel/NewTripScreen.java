@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.content.SharedPreferences;
 import java.text.ParseException;
@@ -24,11 +25,14 @@ import android.content.Context;
 import java.util.Date;
 import java.util.Locale;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.app.Activity;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import android.util.Log;
+
+
 public class NewTripScreen extends AppCompatActivity {
 
     EditText budgetText;
@@ -38,7 +42,7 @@ public class NewTripScreen extends AppCompatActivity {
     Button dateEndText;
     EditText notesText;
     TextView errorText;
-
+    ImageButton backButton;
 
     //String[] schools={
      //      "University of Minnesota", "Stanford"
@@ -7570,6 +7574,17 @@ public class NewTripScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip_screen);
 
+
+        //Back button
+        backButton = (ImageButton) findViewById(R.id.imageButtonBack);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
         //School text initialize
         schoolNameText = ((AutoCompleteTextView) findViewById((R.id.SchoolNameAuto)));
         ArrayAdapter adapt = new ArrayAdapter(this,android.R.layout.simple_list_item_1,schools);
@@ -7767,7 +7782,6 @@ public class NewTripScreen extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -7812,4 +7826,6 @@ public class NewTripScreen extends AppCompatActivity {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+
 }

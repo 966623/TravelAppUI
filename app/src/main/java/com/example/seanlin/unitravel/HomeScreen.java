@@ -91,17 +91,7 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(i);
     }
 
-    //Prevent home screen from going back to anywhere
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    return true;
-            }
 
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     //Delete save file, just for testing
     public void clearData(View view){
@@ -113,5 +103,8 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed(){
+        return;
+    }
 }
