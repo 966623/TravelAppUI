@@ -9,7 +9,9 @@
     <item
         android:state_focused="false"
         android:state_pressed="true"
-        android:drawable="@color/grey" />
+        android:drawable="@color/grey"
+
+        />
 
     <item android:drawable="@color/white" />
 </selector>
