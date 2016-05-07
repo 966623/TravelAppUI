@@ -90,6 +90,12 @@ public class HomeScreen extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), NewTripScreen.class);
         startActivity(i);
     }
+    public void openAddExpense(View view){
+        //do something when button is clicked.
+
+        Intent i = new Intent(getApplicationContext(), AddExpense.class);
+        startActivity(i);
+    }
 
 
 

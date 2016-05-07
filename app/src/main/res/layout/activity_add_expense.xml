@@ -16,7 +16,6 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -205,17 +204,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="56dp"
-        android:text="Add Receipt"
-        android:id="@+id/add_receipt_button"
-        android:background="@drawable/button_white"
-        android:textSize="18dp"
-        android:layout_below="@+id/frameLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="2px"
@@ -223,5 +211,28 @@
         android:layout_centerHorizontal="true"
         android:background="@color/maroon"
         android:id="@+id/frameLayout"></FrameLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/receipt_image"
+        android:layout_below="@+id/frameLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/save_expense_button"
+        android:scaleType="centerCrop" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:text="TAP TO ADD A RECEIPT"
+        android:id="@+id/add_receipt_button"
+        android:background="#00ffffff"
+        android:textSize="50dp"
+        android:layout_below="@+id/frameLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="openCamera"
+        android:layout_above="@+id/save_expense_button"
+        android:textColor="#777777" />
 
 </RelativeLayout>
