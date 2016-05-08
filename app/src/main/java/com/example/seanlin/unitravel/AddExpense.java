@@ -1,23 +1,30 @@
 package com.example.seanlin.unitravel;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddExpense extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -28,10 +35,14 @@ public class AddExpense extends AppCompatActivity {
     private Expense expense;
     private EditText expenseName;
     private EditText cost;
+    private Button datePicker;
+    private ProgressBar budgetBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        budgetBar = (ProgressBar) findViewById(R.id.budget_summary_bar);
+        BudgetSummary.updateBar(budgetBar, ((Globals) getApplication()).getCurrentTrip());
 
         receiptImage = (ImageView) findViewById(R.id.receipt_image);
         receiptButton = (Button) findViewById(R.id.add_receipt_button);
@@ -53,6 +64,39 @@ public class AddExpense extends AppCompatActivity {
                 }
             }
         });
+
+        cost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!cost.getText().toString().equals(""))
+                    BudgetSummary.changeBar(budgetBar,
+                            (int)((Globals)getApplication()).getCurrentTrip().getSpent() + (int)Double.parseDouble(cost.getText().toString()));
+                else
+                    BudgetSummary.changeBar(budgetBar, (int)((Globals)getApplication()).getCurrentTrip().getSpent());
+            }
+        });
+        datePicker = ((Button) findViewById(R.id.date_picker));
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        Calendar newDate = Calendar.getInstance();
+        newDate.set(year, month, day);
+        String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy")
+                .format(newDate.getTime());
+        datePicker.setText(stringDate);
+
         expense = new Expense();
     }
 
@@ -122,6 +166,10 @@ public class AddExpense extends AppCompatActivity {
             Toast.makeText(this, "You must enter a name.", Toast.LENGTH_LONG).show();
             return;
         }
+        if(datePicker.getText().toString().length() <= 0) {
+            Toast.makeText(this, "You must select a date.", Toast.LENGTH_LONG).show();
+            return;
+        }
         if(cost.getText().toString().equals("")){
             Toast.makeText(this, "You must enter a cost.", Toast.LENGTH_LONG).show();
             return;
@@ -130,15 +178,45 @@ public class AddExpense extends AppCompatActivity {
             Toast.makeText(this, "The cost must be more than $0.", Toast.LENGTH_LONG).show();
             return;
         }
-        expense.setName(expenseName.getText().toString());
-        expense.setCost(Double.parseDouble(cost.getText().toString()));
-        expense.setUri(fileUri);
-        expense.setExpenseType(Expense.EXPENSE_TPYE.LODGING);
-        Globals g = (Globals)getApplication();
-        g.getCurrentTrip().AddExpense(expense);
-        g.saveFile();
-        Intent i = new Intent(getApplicationContext(), SummaryPage.class);
-        startActivity(i);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date newDate = new Date();
+        try {
+            newDate = formatter.parse(datePicker.getText().toString());
+        } catch (ParseException e) {              // Insert this block.
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        expense = new Expense(expenseName.getText().toString(), newDate,
+                Double.parseDouble(cost.getText().toString()), fileUri, Expense.EXPENSE_TPYE.LODGING);
+
+        if(((Globals)getApplication()).getCurrentTrip().getSpent() + (float)Double.parseDouble(cost.getText().toString()) >
+                ((Globals)getApplication()).getCurrentTrip().getBudget()) {
+            android.support.v4.app.DialogFragment overBudget = new OverBudgetDialogue((Globals)getApplication(), getApplicationContext(), expense);
+            overBudget.show(getSupportFragmentManager(), "overbudget");
+        }
+
+
+
+        //Globals g = (Globals)getApplication();
+        //g.getCurrentTrip().AddExpense(expense);
+        //g.saveFile();
+        //Intent i = new Intent(getApplicationContext(), SummaryPage.class);
+        //startActivity(i);
+    }
+
+    public void setDate(View view)
+    {
+        hideKeyboard(view);
+        //Create a Bundle to pass in the ID of the button we want to modify the text of
+        Bundle idBundle = new Bundle();
+        idBundle.putInt("id", datePicker.getId());
+
+        //Create a new DialogFragment and pass in the bundle
+        DialogFragment newFragment = new DatePickerWindow(idBundle);
+
+        //Show the date picker
+        newFragment.show(getFragmentManager(), "Date");
+
     }
 
     public void hideKeyboard(View view) {

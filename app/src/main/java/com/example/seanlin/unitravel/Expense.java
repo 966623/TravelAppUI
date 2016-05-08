@@ -15,7 +15,7 @@ public class Expense implements java.io.Serializable{
 
 
     private String name;
-    private Date start, end;
+    private Date date;
     private double cost;
     private EXPENSE_TPYE expenseType;
     private Uri fileUri;
@@ -23,18 +23,17 @@ public class Expense implements java.io.Serializable{
     public Expense()
     {
         this.name = "";
-        this.start = new Date();
-        this.end = new Date();
+        this.date = new Date();
         this.cost = 0.00;
         this.expenseType = EXPENSE_TPYE.NONE;
     }
 
-    public Expense(String name, Date start, Date end, double cost, EXPENSE_TPYE expenseType)
+    public Expense(String name, Date newdate, double cost, Uri uri, EXPENSE_TPYE expenseType)
     {
         this.name = name;
-        this.start = start;
-        this.end = end;
+        this.date = newdate;
         this.cost = cost;
+        this.fileUri = uri;
         this.expenseType = expenseType;
     }
     public EXPENSE_TPYE GetExpenseType()
@@ -65,6 +64,10 @@ public class Expense implements java.io.Serializable{
     }
     public void setExpenseType(EXPENSE_TPYE e){
         expenseType = e;
+    }
+
+    public Date getDate(){
+        return date;
     }
     @Override
     public String toString()

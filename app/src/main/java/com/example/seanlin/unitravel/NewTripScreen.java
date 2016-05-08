@@ -7661,6 +7661,16 @@ public class NewTripScreen extends AppCompatActivity {
 
         //Trip name text
         tripNameText = ((EditText) findViewById(R.id.NewTripName));
+        tripNameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+
         notesText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

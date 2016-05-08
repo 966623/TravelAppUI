@@ -9,7 +9,7 @@ import java.util.Date;
 public class Trip implements java.io.Serializable{
     private String tripName, notes, schoolName;
     private Date start, end;
-    private float budget;
+    private float budget, spent;
     public ArrayList<Expense> travelExpenses, lodgingExpenses, foodExpenses;
 
     public String getTripName(){
@@ -33,10 +33,18 @@ public class Trip implements java.io.Serializable{
         this.end = end;
         this.schoolName = newschoolName;
         this.budget = newBudget;
+        this.spent = 0;
         //expenses still empty
         this.travelExpenses = new ArrayList<>();
         this.lodgingExpenses = new ArrayList<>();
         this.foodExpenses = new ArrayList<>();
+    }
+
+    public float getBudget(){
+        return budget;
+    }
+    public float getSpent(){
+        return spent;
     }
 
     public void AddExpense(Expense expense) {

@@ -43,7 +43,7 @@ public class DatePickerWindow extends DialogFragment implements DatePickerDialog
         // Do something with the date chosen by the user
         Button button = (Button) getActivity().findViewById(bundle.getInt("id"));
         Calendar newDate = Calendar.getInstance();
-        newDate.set(year + 1900, month, day);
+        newDate.set(year, month, day);
         String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy")
                 .format(newDate.getTime());
         button.setText(stringDate);
