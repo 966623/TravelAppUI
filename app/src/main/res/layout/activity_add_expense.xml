@@ -61,7 +61,8 @@
         android:background="@drawable/button_yellow"
         android:textSize="18dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="saveExpense" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -92,7 +93,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/editText"
+                android:id="@+id/expense_name"
                 android:layout_weight=".7"
                 android:singleLine="true" />
         </LinearLayout>
@@ -125,12 +126,12 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/editText2"
+                android:id="@+id/cost_text"
                 android:layout_weight=".7"
                 android:singleLine="true"
-                android:numeric="integer"
                 android:inputType="number"
-                android:hint="0" />
+                android:hint="0"
+                android:numeric="integer" />
         </LinearLayout>
 
         <TextView
@@ -234,5 +235,13 @@
         android:onClick="openCamera"
         android:layout_above="@+id/save_expense_button"
         android:textColor="#777777" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:layout_centerHorizontal="true"
+        android:background="@color/maroon"
+        android:id="@+id/frameLayout2"
+        android:layout_above="@+id/save_expense_button" />
 
 </RelativeLayout>

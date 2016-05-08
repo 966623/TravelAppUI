@@ -1,5 +1,6 @@
 package com.example.seanlin.unitravel;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -8,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +25,9 @@ public class AddExpense extends AppCompatActivity {
     private Uri fileUri;
     private ImageView receiptImage;
     private Button receiptButton;
+    private Expense expense;
+    private EditText expenseName;
+    private EditText cost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +35,25 @@ public class AddExpense extends AppCompatActivity {
 
         receiptImage = (ImageView) findViewById(R.id.receipt_image);
         receiptButton = (Button) findViewById(R.id.add_receipt_button);
+        expenseName = (EditText) findViewById(R.id.expense_name);
+        expenseName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        cost = (EditText) findViewById(R.id.cost_text);
+        cost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+        expense = new Expense();
     }
 
     public void openCamera(View v){
@@ -90,5 +115,34 @@ public class AddExpense extends AppCompatActivity {
                 // Image capture failed, advise user
             }
         }
+    }
+
+    public void saveExpense(View v){
+        if(expenseName.getText().toString().equals("")) {
+            Toast.makeText(this, "You must enter a name.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(cost.getText().toString().equals("")){
+            Toast.makeText(this, "You must enter a cost.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(Double.parseDouble(cost.getText().toString()) == 0.0){
+            Toast.makeText(this, "The cost must be more than $0.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        expense.setName(expenseName.getText().toString());
+        expense.setCost(Double.parseDouble(cost.getText().toString()));
+        expense.setUri(fileUri);
+        expense.setExpenseType(Expense.EXPENSE_TPYE.LODGING);
+        Globals g = (Globals)getApplication();
+        g.getCurrentTrip().AddExpense(expense);
+        g.saveFile();
+        Intent i = new Intent(getApplicationContext(), SummaryPage.class);
+        startActivity(i);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

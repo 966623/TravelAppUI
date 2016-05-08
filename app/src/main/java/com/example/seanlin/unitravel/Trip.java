@@ -12,7 +12,6 @@ public class Trip implements java.io.Serializable{
     private float budget;
     public ArrayList<Expense> travelExpenses, lodgingExpenses, foodExpenses;
 
-
     public String getTripName(){
         return tripName;
     }

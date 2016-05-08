@@ -1,6 +1,7 @@
 package com.example.seanlin.unitravel;
 
 
+import android.net.Uri;
 import android.text.style.TtsSpan;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * Created by Alex on 4/20/2016.
  */
-public class Expense {
+public class Expense implements java.io.Serializable{
 
     public enum EXPENSE_TPYE{NONE,TRAVEL,LODGING,FOOD}
 
@@ -17,7 +18,7 @@ public class Expense {
     private Date start, end;
     private double cost;
     private EXPENSE_TPYE expenseType;
-
+    private Uri fileUri;
 
     public Expense()
     {
@@ -41,6 +42,30 @@ public class Expense {
         return this.expenseType;
     }
 
+    public void setName(String str){
+        name = str;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setCost(double d){
+        cost = d;
+    }
+
+    public double getCost(){
+        return cost;
+    }
+    public void setUri(Uri u){
+        fileUri = u;
+    }
+    public Uri getUri(){
+        return fileUri;
+    }
+    public void setExpenseType(EXPENSE_TPYE e){
+        expenseType = e;
+    }
     @Override
     public String toString()
     {
