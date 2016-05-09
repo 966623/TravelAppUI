@@ -33,17 +33,18 @@ public class SummaryPage extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
 
-    private Trip trip;
     private TextView tripNameText;
+
+    Trip currentTrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary_page);
 
         btnSummary = (Button) findViewById(R.id.btnSummary);
-        btnTravel = (Button) findViewById(R.id.btnSummary);
-        btnLodging = (Button) findViewById(R.id.btnSummary);
-        btnFood = (Button) findViewById(R.id.btnSummary);
+        btnTravel = (Button) findViewById(R.id.btnTravel);
+        btnLodging = (Button) findViewById(R.id.btnLodging);
+        btnFood = (Button) findViewById(R.id.btnFood);
         expenseList = (ListView) findViewById(R.id.expenseList);
 
         arrayList = new ArrayList<>();
@@ -51,6 +52,7 @@ public class SummaryPage extends AppCompatActivity {
         expenseList.setAdapter(adapter);
 
         Globals g = (Globals)getApplication();
+        currentTrip = g.getCurrentTrip();
         tripNameText = ((TextView) findViewById(R.id.tripNameText));
 
         tripNameText.setText(g.getCurrentTrip().getTripName());
@@ -114,23 +116,24 @@ public class SummaryPage extends AppCompatActivity {
         switch (selectedTab) {
             case SUMMARY:
                 //not exactly sure what to do with this one...
-                i = new Intent(getApplicationContext(), HomeScreen.class);
+                //i = new Intent(getApplicationContext(), AddExpense.class);
                 break;
             case TRAVEL:
-                i = new Intent(getApplicationContext(), TravelScreen.class);
+                //i = new Intent(getApplicationContext(), TravelScreen.class);
                 break;
             case LODGING:
                 //change to lodging screen once created
-                i = new Intent(getApplicationContext(), HomeScreen.class);
+                //i = new Intent(getApplicationContext(), HomeScreen.class);
                 break;
             case FOOD:
                 //change to Food screen once created
-                i = new Intent(getApplicationContext(), HomeScreen.class);
+                //i = new Intent(getApplicationContext(), HomeScreen.class);
                 break;
             default:
-                i = new Intent(getApplicationContext(), HomeScreen.class);
+               // i = new Intent(getApplicationContext(), HomeScreen.class);
                 break;
         }
+        i = new Intent(getApplicationContext(), AddExpense.class);
         startActivity(i);
     }
 
@@ -140,7 +143,7 @@ public class SummaryPage extends AppCompatActivity {
 
     public void populateTravelExpenses()
     {
-        for (Expense e: trip.travelExpenses)
+        for (Expense e: currentTrip.travelExpenses)
         {
             arrayList.add(e.toString());
         }
@@ -148,7 +151,7 @@ public class SummaryPage extends AppCompatActivity {
 
     public void populateLodgingExpenses()
     {
-        for (Expense e: trip.lodgingExpenses)
+        for (Expense e: currentTrip.lodgingExpenses)
         {
             arrayList.add(e.toString());
         }
@@ -156,7 +159,7 @@ public class SummaryPage extends AppCompatActivity {
 
     public void populateFoodExpenses()
     {
-        for (Expense e: trip.foodExpenses)
+        for (Expense e: currentTrip.foodExpenses)
         {
             arrayList.add(e.toString());
         }
@@ -164,7 +167,7 @@ public class SummaryPage extends AppCompatActivity {
 
     public void assignTrip(Trip trip)
     {
-        this.trip = trip;
+        this.currentTrip = trip;
     }
 
     @Override
