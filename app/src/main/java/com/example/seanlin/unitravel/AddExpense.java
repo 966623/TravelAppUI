@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -37,10 +38,21 @@ public class AddExpense extends AppCompatActivity {
     private EditText cost;
     private Button datePicker;
     private ProgressBar budgetBar;
+    private TextView usedText;
+    private TextView totalText;
+    private Globals g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        g = (Globals)getApplication();
+
         setContentView(R.layout.activity_add_expense);
+
+        usedText = (TextView) findViewById(R.id.budget_spent_text);
+        totalText = (TextView) findViewById(R.id.budget_total_text);
+        usedText.setText(String.valueOf(g.getCurrentTrip().getSpent()));
+        totalText.setText(String.valueOf(g.getCurrentTrip().getBudget()));
+
         budgetBar = (ProgressBar) findViewById(R.id.budget_summary_bar);
         BudgetSummary.updateBar(budgetBar, ((Globals) getApplication()).getCurrentTrip());
 
@@ -78,11 +90,16 @@ public class AddExpense extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!cost.getText().toString().equals(""))
+                if(!cost.getText().toString().equals("")) {
                     BudgetSummary.changeBar(budgetBar,
-                            (int)((Globals)getApplication()).getCurrentTrip().getSpent() + (int)Double.parseDouble(cost.getText().toString()));
-                else
-                    BudgetSummary.changeBar(budgetBar, (int)((Globals)getApplication()).getCurrentTrip().getSpent());
+                            (int) ((Globals) getApplication()).getCurrentTrip().getSpent() + (int) Double.parseDouble(cost.getText().toString()));
+
+                    usedText.setText(String.valueOf(g.getCurrentTrip().getSpent() + Double.parseDouble(cost.getText().toString())));
+                }
+                else {
+                    BudgetSummary.changeBar(budgetBar, (int) ((Globals) getApplication()).getCurrentTrip().getSpent());
+                    usedText.setText(String.valueOf(g.getCurrentTrip().getSpent()));
+                }
             }
         });
         datePicker = ((Button) findViewById(R.id.date_picker));
