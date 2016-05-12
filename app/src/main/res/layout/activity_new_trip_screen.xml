@@ -173,15 +173,15 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/NewDateStart"
             android:layout_weight=".33"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:hint="MM/DD/YY"
             android:onClick="setNewTripStartDate"
-            style="@android:style/Widget.DeviceDefault.Spinner"
-            android:gravity="center|center_vertical" />
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/date_button" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -200,15 +200,15 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/NewDateEnd"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:layout_weight=".33"
             android:hint="MM/DD/YY"
-            style="@android:style/Widget.DeviceDefault.Spinner"
             android:onClick="setNewTripEndDate"
-            android:gravity="center|center_vertical" />
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/date_button" />
 
     </LinearLayout>
 

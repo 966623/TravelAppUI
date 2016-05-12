@@ -2,7 +2,10 @@ package com.example.seanlin.unitravel;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -131,6 +136,22 @@ public class AddExpense extends AppCompatActivity {
                 String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(
                         g.getCurrentExpense().getDate().getTime());
                 datePicker.setText(stringDate);
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), g.getCurrentExpense().getUri());
+                }
+                catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                int nh = (int) ( bitmap.getHeight() * (1280.0 / bitmap.getWidth()) );
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1280, nh, true);
+                //receiptImage.setImageURI(fileUri);
+                receiptImage.setImageBitmap(scaled);
+                receiptButton.setText("");
             }
             catch (Exception e)
             {
@@ -190,7 +211,20 @@ public class AddExpense extends AppCompatActivity {
                 // Image captured and saved to fileUri specified in the Intent
                 //Toast.makeText(this, "Image saved to:\n" +
                 //       fileUri.toString(), Toast.LENGTH_LONG).show();
-                receiptImage.setImageURI(fileUri);
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
+                }
+                catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                int nh = (int) ( bitmap.getHeight() * (1280.0 / bitmap.getWidth()) );
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1280, nh, true);
+                //receiptImage.setImageURI(fileUri);
+                receiptImage.setImageBitmap(scaled);
                 receiptButton.setText("");
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture

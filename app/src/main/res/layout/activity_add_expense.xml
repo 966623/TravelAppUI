@@ -119,9 +119,9 @@
                 android:id="@+id/date_picker"
                 android:layout_weight=".4"
                 android:hint="MM/DD/YYYY"
-                style="@android:style/Widget.DeviceDefault.Spinner"
                 android:onClick="setDate"
-                android:gravity="center" />
+                android:gravity="center"
+                android:background="@drawable/date_button" />
 
             <Space
                 android:layout_width="0dp"
