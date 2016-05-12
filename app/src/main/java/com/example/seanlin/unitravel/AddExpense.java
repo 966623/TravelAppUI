@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class AddExpense extends AppCompatActivity {
     private ProgressBar budgetBar;
     private TextView usedText;
     private TextView totalText;
+    private ImageButton deleteButton;
     private Globals g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,13 @@ public class AddExpense extends AppCompatActivity {
         setContentView(R.layout.activity_add_expense);
 
 
-
+        deleteButton = (ImageButton) findViewById(R.id.delete_button);
+        if(g.getCurrentExpense() == null)
+            deleteButton.setVisibility(View.INVISIBLE);
         usedText = (TextView) findViewById(R.id.budget_spent_text);
         totalText = (TextView) findViewById(R.id.budget_total_text);
-        usedText.setText(String.valueOf(g.getCurrentTrip().getSpent()));
-        totalText.setText(String.valueOf(g.getCurrentTrip().getBudget()));
+        usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent())));
+        totalText.setText(String.format("%.2f", (g.getCurrentTrip().getBudget())));
 
         budgetBar = (ProgressBar) findViewById(R.id.budget_summary_bar);
         BudgetSummary.updateBar(budgetBar, ((Globals) getApplication()).getCurrentTrip());
@@ -101,11 +105,11 @@ public class AddExpense extends AppCompatActivity {
                     BudgetSummary.changeBar(budgetBar,
                             (int) ((Globals) getApplication()).getCurrentTrip().getSpent() + (int) Double.parseDouble(cost.getText().toString()));
 
-                    usedText.setText(String.valueOf(g.getCurrentTrip().getSpent() + Double.parseDouble(cost.getText().toString())));
+                    usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent() + Double.parseDouble(cost.getText().toString()))));
                 }
                 else {
                     BudgetSummary.changeBar(budgetBar, (int) ((Globals) getApplication()).getCurrentTrip().getSpent());
-                    usedText.setText(String.valueOf(g.getCurrentTrip().getSpent()));
+                    usedText.setText(String.format( "%.2f",(g.getCurrentTrip().getSpent())));
                 }
             }
         });
@@ -132,7 +136,7 @@ public class AddExpense extends AppCompatActivity {
         {
             try {
                 expenseName.setText(g.getCurrentExpense().getName());
-                cost.setText(String.valueOf(g.getCurrentExpense().getCost()));
+                cost.setText(String.format("%.2f", g.getCurrentExpense().getCost()));
                 String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(
                         g.getCurrentExpense().getDate().getTime());
                 datePicker.setText(stringDate);
@@ -296,6 +300,11 @@ public class AddExpense extends AppCompatActivity {
         //Show the date picker
         newFragment.show(getFragmentManager(), "Date");
 
+    }
+
+    public void deleteExpense(View view){
+        android.support.v4.app.DialogFragment deleteD = new DeleteExpenseDialogue((Globals) getApplication(), getApplicationContext());
+        deleteD.show(getSupportFragmentManager(), "deleteexpense");
     }
 
     public void hideKeyboard(View view) {

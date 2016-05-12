@@ -35,12 +35,13 @@
         <ImageButton
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/imageButtonHelp"
+            android:id="@+id/delete_button"
             android:src="@android:drawable/ic_menu_delete"
             android:layout_alignParentEnd="false"
             android:layout_gravity="right"
             android:background="?attr/colorPrimary"
-            android:contentDescription="HomeButton" />
+            android:contentDescription="HomeButton"
+            android:onClick="deleteExpense" />
 
         <TextView
             android:layout_width="wrap_content"

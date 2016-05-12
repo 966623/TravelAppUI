@@ -55,6 +55,13 @@ public class Globals extends Application {
         }
     }
 
+    public void DeleteCurrentExpense(){
+        if(currentExpense != null){
+            getCurrentTrip().DeleteExpense(currentExpense);
+            currentExpense = null;
+        }
+    }
+
 
 
 }

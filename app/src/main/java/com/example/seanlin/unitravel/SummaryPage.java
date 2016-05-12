@@ -65,6 +65,7 @@ public class SummaryPage extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
+        g.setCurrentExpense(null);
         tripNameText.setText(g.getCurrentTrip().getTripName());
         budgetPercentage.setText(String.valueOf(
                 g.getCurrentTrip().getSpent() / g.getCurrentTrip().getBudget() *100) + "%");
