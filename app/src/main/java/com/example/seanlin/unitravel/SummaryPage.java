@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SummaryPage extends AppCompatActivity {
@@ -31,6 +32,8 @@ public class SummaryPage extends AppCompatActivity {
     private Button btnFood;
     private ListView expenseList;
 
+    private Button btnAddExpense;
+
     private ArrayAdapter<String> adapter;
     private ArrayList<String> expenses;
 
@@ -41,18 +44,20 @@ public class SummaryPage extends AppCompatActivity {
 
     Globals g;
 
+    DecimalFormat df = new DecimalFormat("0.00##");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary_page);
-
+        btnAddExpense = (Button) findViewById(R.id.btnAddExpense);
         btnSummary = (Button) findViewById(R.id.btnSummary);
         btnTravel = (Button) findViewById(R.id.btnTravel);
         btnLodging = (Button) findViewById(R.id.btnLodging);
         btnFood = (Button) findViewById(R.id.btnFood);
         expenseList = (ListView) findViewById(R.id.expenseList);
         tripNameText = ((TextView) findViewById(R.id.tripNameText));
-        budgetBar = (ProgressBar) findViewById(R.id.budget_summary_bar);
+        budgetBar = (ProgressBar) findViewById(R.id.progressBar);
         budgetPercentage = (TextView) findViewById(R.id.budgetPercentage);
         budgetRemaining =  (TextView) findViewById(R.id.budgetRemaining);
 
@@ -65,13 +70,35 @@ public class SummaryPage extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-        g.setCurrentExpense(null);
+        String s;
+        btnAddExpense.setVisibility(View.INVISIBLE);
+        BudgetSummary.updateBar(budgetBar, g.getCurrentTrip());
         tripNameText.setText(g.getCurrentTrip().getTripName());
-        budgetPercentage.setText(String.valueOf(
-                g.getCurrentTrip().getSpent() / g.getCurrentTrip().getBudget() *100) + "%");
-        budgetRemaining.setText(String.valueOf(
-                g.getCurrentTrip().getBudget() - g.getCurrentTrip().getSpent()));
-
+        if(g.getCurrentTrip().getBudget() >= g.getCurrentTrip().getSpent()) {
+            s = "Budget Usage: " + String.format(
+                    "%.2f",
+                    g.getCurrentTrip().getSpent() / g.getCurrentTrip().getBudget() * 100) + "%";
+            budgetPercentage.setText(s);
+            budgetPercentage.setTextColor(Color.BLACK);
+            s = "Remaining Funds: $" + String.format(
+                    "%.2f",
+                    g.getCurrentTrip().getBudget() - g.getCurrentTrip().getSpent());
+            budgetRemaining.setTextColor(Color.BLACK);
+            BudgetSummary.changeBar(budgetBar,(int)g.getCurrentTrip().getSpent());
+        }
+        else
+        {
+            s = "Budget Usage: " + String.format(
+                    "%.2f",
+                    g.getCurrentTrip().getSpent() / g.getCurrentTrip().getBudget() * 100) + "%";
+            budgetPercentage.setText(s);
+            budgetPercentage.setTextColor(Color.RED);
+            s = "Amount Over: $" + String.format(
+                    "%.2f", g.getCurrentTrip().getBudget() - g.getCurrentTrip().getSpent());
+            budgetRemaining.setTextColor(Color.RED);
+            BudgetSummary.changeBar(budgetBar, (int)g.getCurrentTrip().getBudget());
+        }
+        budgetRemaining.setText(s);
         clearExpensesList();
         populateTravelExpenses();
         populateLodgingExpenses();
@@ -87,7 +114,7 @@ public class SummaryPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
 
-                g.setCurrentExpense(g.getCurrentTrip().lodgingExpenses.get(position));
+                g.setCurrentExpense(g.getCurrentTrip().foodExpenses.get(position));
                 Intent i = new Intent(getApplicationContext(), AddExpense.class);
                 startActivity(i);
             }
@@ -101,10 +128,19 @@ public class SummaryPage extends AppCompatActivity {
 
     //buttons acting as a group of tabs. Not sure of the best way to do this, but is should work.
     public void onSummaryButtonClick(View view) {
+
+        btnAddExpense.setVisibility(View.INVISIBLE);
+
         btnSummary.setBackgroundColor(Color.parseColor("#ffcc33"));
         btnTravel.setBackgroundColor(Color.parseColor("#7a0019"));
         btnLodging.setBackgroundColor(Color.parseColor("#7a0019"));
         btnFood.setBackgroundColor(Color.parseColor("#7a0019"));
+
+        btnSummary.setTextColor(Color.BLACK);
+        btnTravel.setTextColor(Color.WHITE);
+        btnLodging.setTextColor(Color.WHITE);
+        btnFood.setTextColor(Color.WHITE);
+
         selectedTab = TAB.SUMMARY;
         clearExpensesList();
         populateTravelExpenses();
@@ -117,10 +153,19 @@ public class SummaryPage extends AppCompatActivity {
     }
 
     public void onTravelButtonClick(View view) {
+
+        btnAddExpense.setVisibility(View.VISIBLE);
+
         btnSummary.setBackgroundColor(Color.parseColor("#7a0019"));
         btnTravel.setBackgroundColor(Color.parseColor("#ffcc33"));
         btnLodging.setBackgroundColor(Color.parseColor("#7a0019"));
         btnFood.setBackgroundColor(Color.parseColor("#7a0019"));
+
+        btnSummary.setTextColor(Color.WHITE);
+        btnTravel.setTextColor(Color.BLACK);
+        btnLodging.setTextColor(Color.WHITE);
+        btnFood.setTextColor(Color.WHITE);
+
         selectedTab = TAB.TRAVEL;
         clearExpensesList();
         populateTravelExpenses();
@@ -130,26 +175,45 @@ public class SummaryPage extends AppCompatActivity {
     }
 
     public void onLodgingButtonClick(View view) {
+        btnAddExpense.setVisibility(View.VISIBLE);
+
         btnSummary.setBackgroundColor(Color.parseColor("#7a0019"));
         btnTravel.setBackgroundColor(Color.parseColor("#7a0019"));
         btnLodging.setBackgroundColor(Color.parseColor("#ffcc33"));
         btnFood.setBackgroundColor(Color.parseColor("#7a0019"));
+
+        btnSummary.setTextColor(Color.WHITE);
+        btnTravel.setTextColor(Color.WHITE);
+        btnLodging.setTextColor(Color.BLACK);
+        btnFood.setTextColor(Color.WHITE);
+
         selectedTab = TAB.LODGING;
         clearExpensesList();
         populateLodgingExpenses();
+
         final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, expenses);
         expenseList.setAdapter(adapter);
     }
 
     public void onFoodButtonClick(View view) {
+        btnAddExpense.setVisibility(View.VISIBLE);
+
         btnSummary.setBackgroundColor(Color.parseColor("#7a0019"));
         btnTravel.setBackgroundColor(Color.parseColor("#7a0019"));
         btnLodging.setBackgroundColor(Color.parseColor("#7a0019"));
         btnFood.setBackgroundColor(Color.parseColor("#ffcc33"));
+
+        btnSummary.setTextColor(Color.WHITE);
+        btnTravel.setTextColor(Color.WHITE);
+        btnLodging.setTextColor(Color.WHITE);
+        btnFood.setTextColor(Color.BLACK);
+
         selectedTab = TAB.FOOD;
+
         clearExpensesList();
         populateFoodExpenses();
+
         final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, expenses);
         expenseList.setAdapter(adapter);
