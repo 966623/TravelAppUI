@@ -101,15 +101,32 @@ public class AddExpense extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!cost.getText().toString().equals("")) {
-                    BudgetSummary.changeBar(budgetBar,
-                            (int) ((Globals) getApplication()).getCurrentTrip().getSpent() + (int) Double.parseDouble(cost.getText().toString()));
+                if(g.getCurrentExpense() == null) {
+                    if (!cost.getText().toString().equals("")) {
+                        BudgetSummary.changeBar(budgetBar,
+                                (int) ((Globals) getApplication()).getCurrentTrip().getSpent() + (int) Double.parseDouble(cost.getText().toString()));
 
-                    usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent() + Double.parseDouble(cost.getText().toString()))));
+                        usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent() + Double.parseDouble(cost.getText().toString()))));
+                    } else {
+                        BudgetSummary.changeBar(budgetBar, (int) ((Globals) getApplication()).getCurrentTrip().getSpent());
+                        usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent())));
+                    }
                 }
-                else {
-                    BudgetSummary.changeBar(budgetBar, (int) ((Globals) getApplication()).getCurrentTrip().getSpent());
-                    usedText.setText(String.format( "%.2f",(g.getCurrentTrip().getSpent())));
+                else
+                {
+                    if (!cost.getText().toString().equals("")) {
+                        BudgetSummary.changeBar(budgetBar,
+                                (int) ((Globals) getApplication()).getCurrentTrip().getSpent() -
+                                        (int) g.getCurrentExpense().getCost() +
+                                        (int) Double.parseDouble(cost.getText().toString()));
+
+                        usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent() -
+                                g.getCurrentExpense().getCost() +
+                                Double.parseDouble(cost.getText().toString()))));
+                    } else {
+                        BudgetSummary.changeBar(budgetBar, (int) ((Globals) getApplication()).getCurrentTrip().getSpent());
+                        usedText.setText(String.format("%.2f", (g.getCurrentTrip().getSpent())));
+                    }
                 }
             }
         });
@@ -139,6 +156,7 @@ public class AddExpense extends AppCompatActivity {
                 cost.setText(String.format("%.2f", g.getCurrentExpense().getCost()));
                 String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(
                         g.getCurrentExpense().getDate().getTime());
+
                 datePicker.setText(stringDate);
 
                 Bitmap bitmap = null;
@@ -265,7 +283,9 @@ public class AddExpense extends AppCompatActivity {
         }
         if (g.getCurrentExpense() != null)
         {
+            g.getCurrentTrip().removeCost(g.getCurrentExpense());
             g.getCurrentExpense().setCost(Double.parseDouble(cost.getText().toString()));
+            g.getCurrentTrip().addCost(g.getCurrentExpense());
             g.getCurrentExpense().setName(expenseName.getText().toString());
             g.getCurrentExpense().setDate(newDate);
             g.getCurrentExpense().setUri(fileUri);
@@ -273,7 +293,7 @@ public class AddExpense extends AppCompatActivity {
         else
         {
             expense = new Expense(expenseName.getText().toString(), newDate,
-                    Double.parseDouble(cost.getText().toString()), fileUri, Expense.EXPENSE_TPYE.LODGING);
+                    Double.parseDouble(cost.getText().toString()), fileUri, Expense.EXPENSE_TPYE.FOOD);
 
             if (((Globals) getApplication()).getCurrentTrip().getSpent() + (float) Double.parseDouble(cost.getText().toString()) >
                     ((Globals) getApplication()).getCurrentTrip().getBudget()) {
