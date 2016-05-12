@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.view.KeyEvent;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,15 @@ public class SummaryPage extends AppCompatActivity {
     private ListView expenseList;
 
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> arrayList;
+    private ArrayList<String> expenses;
+
+    private ProgressBar budgetBar;
+    private TextView budgetPercentage, budgetRemaining;
 
     private TextView tripNameText;
 
-    Trip currentTrip;
+    Globals g;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,17 +51,52 @@ public class SummaryPage extends AppCompatActivity {
         btnLodging = (Button) findViewById(R.id.btnLodging);
         btnFood = (Button) findViewById(R.id.btnFood);
         expenseList = (ListView) findViewById(R.id.expenseList);
+        tripNameText = ((TextView) findViewById(R.id.tripNameText));
+        budgetBar = (ProgressBar) findViewById(R.id.budget_summary_bar);
+        budgetPercentage = (TextView) findViewById(R.id.budgetPercentage);
+        budgetRemaining =  (TextView) findViewById(R.id.budgetRemaining);
 
-        arrayList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+        g = (Globals)getApplication();
+        expenses = new ArrayList<>();
+
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        tripNameText.setText(g.getCurrentTrip().getTripName());
+        budgetPercentage.setText(String.valueOf(
+                g.getCurrentTrip().getSpent() / g.getCurrentTrip().getBudget() *100) + "%");
+        budgetRemaining.setText(String.valueOf(
+                g.getCurrentTrip().getBudget() - g.getCurrentTrip().getSpent()));
+
+        clearExpensesList();
+        populateTravelExpenses();
+        populateLodgingExpenses();
+        populateFoodExpenses();
+
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, expenses);
         expenseList.setAdapter(adapter);
 
-        Globals g = (Globals)getApplication();
-        currentTrip = g.getCurrentTrip();
-        tripNameText = ((TextView) findViewById(R.id.tripNameText));
+        expenseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        tripNameText.setText(g.getCurrentTrip().getTripName());
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+
+                g.setCurrentExpense(g.getCurrentTrip().lodgingExpenses.get(position));
+                Intent i = new Intent(getApplicationContext(), AddExpense.class);
+                startActivity(i);
+            }
+
+        });
+
+
+
     }
+
 
     //buttons acting as a group of tabs. Not sure of the best way to do this, but is should work.
     public void onSummaryButtonClick(View view) {
@@ -69,7 +109,10 @@ public class SummaryPage extends AppCompatActivity {
         populateTravelExpenses();
         populateLodgingExpenses();
         populateFoodExpenses();
-        adapter.notifyDataSetChanged();
+        // adapter.notifyDataSetChanged();
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, expenses);
+        expenseList.setAdapter(adapter);
     }
 
     public void onTravelButtonClick(View view) {
@@ -80,7 +123,9 @@ public class SummaryPage extends AppCompatActivity {
         selectedTab = TAB.TRAVEL;
         clearExpensesList();
         populateTravelExpenses();
-        adapter.notifyDataSetChanged();
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, expenses);
+        expenseList.setAdapter(adapter);
     }
 
     public void onLodgingButtonClick(View view) {
@@ -91,7 +136,9 @@ public class SummaryPage extends AppCompatActivity {
         selectedTab = TAB.LODGING;
         clearExpensesList();
         populateLodgingExpenses();
-        adapter.notifyDataSetChanged();
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, expenses);
+        expenseList.setAdapter(adapter);
     }
 
     public void onFoodButtonClick(View view) {
@@ -102,7 +149,9 @@ public class SummaryPage extends AppCompatActivity {
         selectedTab = TAB.FOOD;
         clearExpensesList();
         populateFoodExpenses();
-        adapter.notifyDataSetChanged();
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, expenses);
+        expenseList.setAdapter(adapter);
     }
 
     //save and return to the home screen
@@ -112,63 +161,34 @@ public class SummaryPage extends AppCompatActivity {
     }
 
     public void onNewExpenseClick(View view) {
-        Intent i;
-        switch (selectedTab) {
-            case SUMMARY:
-                //not exactly sure what to do with this one...
-                //i = new Intent(getApplicationContext(), AddExpense.class);
-                break;
-            case TRAVEL:
-                //i = new Intent(getApplicationContext(), TravelScreen.class);
-                break;
-            case LODGING:
-                //change to lodging screen once created
-                //i = new Intent(getApplicationContext(), HomeScreen.class);
-                break;
-            case FOOD:
-                //change to Food screen once created
-                //i = new Intent(getApplicationContext(), HomeScreen.class);
-                break;
-            default:
-               // i = new Intent(getApplicationContext(), HomeScreen.class);
-                break;
-        }
-        i = new Intent(getApplicationContext(), AddExpense.class);
+        g.setCurrentExpense(null);
+        Intent i = new Intent(getApplicationContext(), AddExpense.class);
         startActivity(i);
     }
 
     public void clearExpensesList() {
-        arrayList.clear();
+        expenses.clear();
     }
 
-    public void populateTravelExpenses()
-    {
-        for (Expense e: currentTrip.travelExpenses)
-        {
-            arrayList.add(e.toString());
+    public void populateTravelExpenses() {
+        for (int i = 0; i < g.getCurrentTrip().travelExpenses.size(); i++) {
+            expenses.add(g.getCurrentTrip().travelExpenses.get(i).getName());
         }
     }
 
     public void populateLodgingExpenses()
     {
-        for (Expense e: currentTrip.lodgingExpenses)
-        {
-            arrayList.add(e.toString());
+        for(int i = 0;i<g.getCurrentTrip().lodgingExpenses.size();++i){
+            expenses.add(g.getCurrentTrip().lodgingExpenses.get(i).getName());
         }
     }
 
-    public void populateFoodExpenses()
-    {
-        for (Expense e: currentTrip.foodExpenses)
-        {
-            arrayList.add(e.toString());
+    public void populateFoodExpenses() {
+        for (int i = 0; i < g.getCurrentTrip().foodExpenses.size(); i++) {
+            expenses.add(g.getCurrentTrip().foodExpenses.get(i).getName());
         }
     }
 
-    public void assignTrip(Trip trip)
-    {
-        this.currentTrip = trip;
-    }
 
     @Override
     public void onBackPressed(){
