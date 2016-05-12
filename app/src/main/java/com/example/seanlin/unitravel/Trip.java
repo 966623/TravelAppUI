@@ -65,5 +65,15 @@ public class Trip implements java.io.Serializable{
     public void DeleteExpense(Expense e){
         lodgingExpenses.remove(e);
     }
+    
+        public void removeCost(Expense expense)
+    {
+        spent -= expense.getCost();
+    }
+
+    public void addCost(Expense expense)
+    {
+        spent += expense.getCost();
+    }
 
 }
