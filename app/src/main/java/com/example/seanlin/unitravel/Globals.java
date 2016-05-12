@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 public class Globals extends Application {
 
     private Trip currentTrip;
+    private Expense currentExpense;
     private TripList tripList = new TripList();
 
     public void onCreate(){
@@ -27,6 +28,9 @@ public class Globals extends Application {
     public void setCurrentTrip(Trip t){
         currentTrip = t;
     }
+
+    public Expense getCurrentExpense() {return currentExpense;}
+    public void setCurrentExpense(Expense e) {this.currentExpense = e;}
 
     public void setTripList(TripList tl){
         tripList = tl;
@@ -50,5 +54,7 @@ public class Globals extends Application {
             e.printStackTrace();
         }
     }
+
+
 
 }

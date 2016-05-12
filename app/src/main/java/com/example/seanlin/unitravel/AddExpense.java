@@ -230,6 +230,7 @@ public class AddExpense extends AppCompatActivity {
             g.getCurrentExpense().setCost(Double.parseDouble(cost.getText().toString()));
             g.getCurrentExpense().setName(expenseName.getText().toString());
             g.getCurrentExpense().setDate(newDate);
+            g.getCurrentExpense().setUri(fileUri);
         }
         else
         {
