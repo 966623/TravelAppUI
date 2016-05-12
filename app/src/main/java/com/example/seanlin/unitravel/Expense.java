@@ -46,7 +46,9 @@ public class Expense implements java.io.Serializable{
     }
 
     public String getName(){
-        return name;
+        if (name == null)
+            this.name = "";
+        return this.name;
     }
 
     public void setCost(double d){
@@ -56,6 +58,7 @@ public class Expense implements java.io.Serializable{
     public double getCost(){
         return cost;
     }
+
     public void setUri(Uri u){
         fileUri = u;
     }
@@ -69,6 +72,7 @@ public class Expense implements java.io.Serializable{
     public Date getDate(){
         return date;
     }
+    public void setDate(Date d) {date = d;}
     @Override
     public String toString()
     {
