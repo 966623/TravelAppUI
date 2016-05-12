@@ -48,6 +48,8 @@ public class AddExpense extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_expense);
 
+
+
         usedText = (TextView) findViewById(R.id.budget_spent_text);
         totalText = (TextView) findViewById(R.id.budget_total_text);
         usedText.setText(String.valueOf(g.getCurrentTrip().getSpent()));
@@ -115,6 +117,26 @@ public class AddExpense extends AppCompatActivity {
         datePicker.setText(stringDate);
 
         expense = new Expense();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if(g.getCurrentExpense() != null)
+        {
+            try {
+                expenseName.setText(g.getCurrentExpense().getName());
+                cost.setText(String.valueOf(g.getCurrentExpense().getCost()));
+                String stringDate = new java.text.SimpleDateFormat("MM/dd/yyyy").format(
+                        g.getCurrentExpense().getDate().getTime());
+                datePicker.setText(stringDate);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void openCamera(View v){
@@ -203,22 +225,27 @@ public class AddExpense extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        expense = new Expense(expenseName.getText().toString(), newDate,
-                Double.parseDouble(cost.getText().toString()), fileUri, Expense.EXPENSE_TPYE.LODGING);
-
-        if(((Globals)getApplication()).getCurrentTrip().getSpent() + (float)Double.parseDouble(cost.getText().toString()) >
-                ((Globals)getApplication()).getCurrentTrip().getBudget()) {
-            android.support.v4.app.DialogFragment overBudget = new OverBudgetDialogue((Globals)getApplication(), getApplicationContext(), expense);
-            overBudget.show(getSupportFragmentManager(), "overbudget");
+        if (g.getCurrentExpense() != null)
+        {
+            g.getCurrentExpense().setCost(Double.parseDouble(cost.getText().toString()));
+            g.getCurrentExpense().setName(expenseName.getText().toString());
+            g.getCurrentExpense().setDate(newDate);
         }
+        else
+        {
+            expense = new Expense(expenseName.getText().toString(), newDate,
+                    Double.parseDouble(cost.getText().toString()), fileUri, Expense.EXPENSE_TPYE.LODGING);
 
-
-
-        //Globals g = (Globals)getApplication();
-        //g.getCurrentTrip().AddExpense(expense);
-        //g.saveFile();
-        //Intent i = new Intent(getApplicationContext(), SummaryPage.class);
-        //startActivity(i);
+            if (((Globals) getApplication()).getCurrentTrip().getSpent() + (float) Double.parseDouble(cost.getText().toString()) >
+                    ((Globals) getApplication()).getCurrentTrip().getBudget()) {
+                android.support.v4.app.DialogFragment overBudget = new OverBudgetDialogue((Globals) getApplication(), getApplicationContext(), expense);
+                overBudget.show(getSupportFragmentManager(), "overbudget");
+            }
+            g.getCurrentTrip().AddExpense(expense);
+        }
+        g.saveFile();
+        Intent i = new Intent(getApplicationContext(), SummaryPage.class);
+        startActivity(i);
     }
 
     public void setDate(View view)
