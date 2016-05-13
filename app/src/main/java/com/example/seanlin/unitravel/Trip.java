@@ -60,6 +60,7 @@ public class Trip implements java.io.Serializable{
                 foodExpenses.add(expense);
                 break;
         }
+        addCost(expense);
     }
 
     public void DeleteExpense(Expense e){
