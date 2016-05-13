@@ -289,6 +289,9 @@ public class AddExpense extends AppCompatActivity {
             g.getCurrentExpense().setName(expenseName.getText().toString());
             g.getCurrentExpense().setDate(newDate);
             g.getCurrentExpense().setUri(fileUri);
+            g.saveFile();
+            Intent i = new Intent(getApplicationContext(), SummaryPage.class);
+            startActivity(i);
         }
         else
         {
@@ -300,11 +303,15 @@ public class AddExpense extends AppCompatActivity {
                 android.support.v4.app.DialogFragment overBudget = new OverBudgetDialogue((Globals) getApplication(), getApplicationContext(), expense);
                 overBudget.show(getSupportFragmentManager(), "overbudget");
             }
-            g.getCurrentTrip().AddExpense(expense);
+            else{
+                g.getCurrentTrip().AddExpense(expense);
+                g.saveFile();
+                Intent i = new Intent(getApplicationContext(), SummaryPage.class);
+                startActivity(i);
+            }
+
         }
-        g.saveFile();
-        Intent i = new Intent(getApplicationContext(), SummaryPage.class);
-        startActivity(i);
+
     }
 
     public void setDate(View view)

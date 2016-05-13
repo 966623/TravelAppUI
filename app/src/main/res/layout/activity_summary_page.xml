@@ -131,7 +131,8 @@
             android:layout_toEndOf="@+id/btnSummary"
             android:background="#7a0019"
             android:nestedScrollingEnabled="false"
-            android:onClick="onTravelButtonClick" />
+            android:onClick="onTravelButtonClick"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="0dp"
@@ -143,7 +144,8 @@
             android:layout_toRightOf="@+id/btnTravel"
             android:layout_toEndOf="@+id/btnTravel"
             android:background="#7a0019"
-            android:onClick="onLodgingButtonClick" />
+            android:onClick="onLodgingButtonClick"
+            android:textColor="#ffffff" />
 
         <Button
             android:layout_width="0dp"
@@ -155,7 +157,8 @@
             android:layout_toRightOf="@+id/btnLodging"
             android:layout_toEndOf="@+id/btnLodging"
             android:background="#7a0019"
-            android:onClick="onFoodButtonClick" />
+            android:onClick="onFoodButtonClick"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 
@@ -193,7 +196,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:textColor="#ffffff" />
 
         <android.gesture.GestureOverlayView
             android:layout_width="wrap_content"

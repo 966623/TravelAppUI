@@ -64,7 +64,19 @@ public class Trip implements java.io.Serializable{
     }
 
     public void DeleteExpense(Expense e){
-        lodgingExpenses.remove(e);
+        removeCost(e);
+        switch (e.GetExpenseType())
+        {
+            case TRAVEL:
+                travelExpenses.remove(e);
+                break;
+            case LODGING:
+                lodgingExpenses.remove(e);
+                break;
+            case FOOD:
+                foodExpenses.remove(e);
+                break;
+        }
     }
     
         public void removeCost(Expense expense)
